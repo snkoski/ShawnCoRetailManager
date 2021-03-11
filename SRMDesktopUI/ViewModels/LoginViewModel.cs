@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using SRMDesktopUI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,11 @@ namespace SRMDesktopUI.ViewModels
     {
         private string _userName;
         private string _password;
-
+        private IAPIHelper _apiHelper;
+        public LoginViewModel(IAPIHelper apiHelper)
+        {
+            _apiHelper = apiHelper;
+        }
         public string UserName
         {
             get { return _userName; }
@@ -50,9 +55,17 @@ namespace SRMDesktopUI.ViewModels
             }
         }
          
-        public void LogIn()
+        public async Task LogIn()
         {
+            try
+            {
+                var result = await _apiHelper.Authenticate(UserName, Password);
+            }
+            catch (Exception ex)
+            {
 
+                Console.WriteLine(ex.Message);
+            }
         }
 
     }
