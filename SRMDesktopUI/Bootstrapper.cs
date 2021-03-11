@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using SRMDesktopUI.Helpers;
 using SRMDesktopUI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace SRMDesktopUI
 {
+    // PasswordboxHelper code from:
+    // https://stackoverflow.com/questions/30631522/caliburn-micro-support-for-passwordbox
     class Bootstrapper : BootstrapperBase
     {
         private SimpleContainer _container = new SimpleContainer();
@@ -16,6 +20,11 @@ namespace SRMDesktopUI
         public Bootstrapper()
         {
             Initialize();
+
+            ConventionManager.AddElementConvention<PasswordBox>(
+            PasswordBoxHelper.BoundPasswordProperty,
+            "Password",
+            "PasswordChanged");
         }
 
         protected override void Configure()
